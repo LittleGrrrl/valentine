@@ -164,7 +164,6 @@
     }
 
     function moveNo(){
-      // слегка “убегающая” кнопка
       const dx = (Math.random()*220 - 110);
       const dy = (Math.random()*120 - 60);
       no.style.transform = `translate(${dx}px, ${dy}px)`;
@@ -175,7 +174,6 @@
       noClicks++;
       moveNo();
       no.textContent = noPhrases[Math.min(noClicks-1, noPhrases.length-1)];
-      // делаем "да" чуть больше, как в видосах
       const scale = 1 + Math.min(noClicks, 6) * 0.08;
       yes.style.transform = `scale(${scale.toFixed(2)})`;
       if(noClicks === 2) { emoji.textContent = "😳💘"; }
@@ -189,7 +187,6 @@
     });
 
     document.addEventListener('click', (e) => {
-      // на финальном экране кликом добавляем сердечки
       if(final.style.display === 'block') spawnHearts(10);
     });
   </script>
