@@ -138,8 +138,6 @@
     const no = document.getElementById('no');
     const ask = document.getElementById('ask');
     const final = document.getElementById('final');
-    const title = document.getElementById('title');
-    const emoji = document.getElementById('emoji');
 
     const noPhrases = [
       "Точно нет? 🥺",
@@ -176,14 +174,12 @@
       no.textContent = noPhrases[Math.min(noClicks-1, noPhrases.length-1)];
       const scale = 1 + Math.min(noClicks, 6) * 0.08;
       yes.style.transform = `scale(${scale.toFixed(2)})`;
-      if(noClicks === 2) { emoji.textContent = "😳💘"; }
     });
 
     yes.addEventListener('click', () => {
       ask.style.display = 'none';
       final.style.display = 'block';
       spawnHearts(24);
-      title.textContent = "Официально: моя валентинка!";
     });
 
     document.addEventListener('click', (e) => {
