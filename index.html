@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Валентинка 💘</title>
+  <style>
+    :root{
+      --bg1:#ffb3c7; --bg2:#ffd6e7;
+      --card:#ffffffcc; --text:#2a2a2a;
+      --yes:#ff4d7d; --no:#6b7280;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(circle at 20% 10%, #fff 0 12%, transparent 13%),
+                  radial-gradient(circle at 80% 30%, #fff 0 10%, transparent 11%),
+                  linear-gradient(135deg,var(--bg1),var(--bg2));
+      overflow:hidden;
+    }
+    .wrap{
+      width:min(520px, 92vw);
+      padding:28px 22px;
+      border-radius:24px;
+      background:var(--card);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.12);
+      position:relative;
+    }
+    #ask {
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+    h1{margin:0 0 10px; font-size:28px; line-height:1.1}
+    p{margin:0 0 18px; font-size:16px; opacity:.9}
+    .gif{
+      width:100%;
+      display:flex; justify-content:center; margin:10px 0 18px;
+      font-size:56px;
+      filter: drop-shadow(0 10px 10px rgba(0,0,0,.1));
+      user-select:none;
+    }
+    .btns{display:flex; gap:12px; justify-content:center; flex-wrap:wrap; position:relative; padding:10px 0}
+    button{
+      border:0; cursor:pointer; font-weight:700;
+      padding:12px 18px; border-radius:999px;
+      font-size:16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,.12);
+      transition: transform .12s ease;
+    }
+    button:active{transform: scale(.98)}
+    #yes{background:var(--yes); color:#fff}
+    #no{
+      background:var(--no); color:#fff;
+      position:relative;
+    }
+
+    /* финальный экран */
+    .final{
+      display:none;
+      text-align:center;
+    }
+    .final h2{margin:0 0 10px; font-size:28px}
+    .final .note{
+      margin:0 auto;
+      max-width:38ch;
+      font-size:16px;
+      line-height:1.45;
+      padding:14px 16px;
+      border-radius:18px;
+      background:#fff;
+      box-shadow: 0 12px 30px rgba(0,0,0,.10);
+    }
+    .footer{
+      margin-top:14px;
+      font-size:13px;
+      opacity:.7;
+      text-align:center;
+    }
+
+    /* плавающие сердечки */
+    .heart{
+      position:fixed;
+      left:50%;
+      top:110%;
+      font-size:18px;
+      pointer-events:none;
+      animation: floatUp linear forwards;
+      filter: drop-shadow(0 6px 8px rgba(0,0,0,.12));
+    }
+
+    .pets {
+        object-fit: contain;
+    }
+    @keyframes floatUp{
+      from{ transform: translateX(var(--x)) translateY(0) rotate(0deg); opacity:0 }
+      10%{opacity:1}
+      to{ transform: translateX(var(--x)) translateY(-120vh) rotate(360deg); opacity:0 }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" id="card">
+    <section id="ask">
+      <h1 id="title">Сееев, will you be my valentine? 💘</h1>
+     
+
+      <img src="sticker.webp" width="200">
+
+      <div class="btns" id="btns">
+        <button id="yes">Ага ❤️</button>
+        <button id="no">Нет 😶</button>
+      </div>
+
+    </section>
+
+    <section class="final" id="final">
+      <h2>как неожиданно и прияятно</h2>
+      <div class="gif">
+        <img src="motya.webp" width="100"  class="pets">
+        <img src="yva.png"  width="150"  class="pets">
+        <img src="dany.webp"  width="100"  class="pets">
+      </div>
+      <div class="note" id="finalText">
+        Спасибо, что ты есть. <br>
+        Я тебя очень люблю и выбираю каждый день<br>
+        Твоя Маша 🐥
+      </div>
+      <div class="footer">P.S. нажми в любом месте — будут сердечки ✨</div>
+    </section>
+  </main>
+
+  <script>
+    const yes = document.getElementById('yes');
+    const no = document.getElementById('no');
+    const ask = document.getElementById('ask');
+    const final = document.getElementById('final');
+    const title = document.getElementById('title');
+    const emoji = document.getElementById('emoji');
+
+    const noPhrases = [
+      "Точно нет? 🥺",
+      "Подумай ещё раз…",
+      "Вау..осуждаю",
+      "Бан",
+    ];
+    let noClicks = 0;
+
+    function spawnHearts(count = 14){
+      for(let i=0;i<count;i++){
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.textContent = Math.random() > 0.5 ? '💗' : '💖';
+        h.style.setProperty('--x', `${(Math.random()*80 - 40).toFixed(0)}vw`);
+        h.style.animationDuration = `${(Math.random()*2.2 + 2.4).toFixed(2)}s`;
+        h.style.fontSize = `${(Math.random()*18 + 14).toFixed(0)}px`;
+        h.style.left = `${(Math.random()*100).toFixed(0)}vw`;
+        document.body.appendChild(h);
+        h.addEventListener('animationend', ()=> h.remove());
+      }
+    }
+
+    function moveNo(){
+      // слегка “убегающая” кнопка
+      const dx = (Math.random()*220 - 110);
+      const dy = (Math.random()*120 - 60);
+      no.style.transform = `translate(${dx}px, ${dy}px)`;
+    }
+
+    no.addEventListener('mouseenter', moveNo);
+    no.addEventListener('click', () => {
+      noClicks++;
+      moveNo();
+      no.textContent = noPhrases[Math.min(noClicks-1, noPhrases.length-1)];
+      // делаем "да" чуть больше, как в видосах
+      const scale = 1 + Math.min(noClicks, 6) * 0.08;
+      yes.style.transform = `scale(${scale.toFixed(2)})`;
+      if(noClicks === 2) { emoji.textContent = "😳💘"; }
+    });
+
+    yes.addEventListener('click', () => {
+      ask.style.display = 'none';
+      final.style.display = 'block';
+      spawnHearts(24);
+      title.textContent = "Официально: моя валентинка!";
+    });
+
+    document.addEventListener('click', (e) => {
+      // на финальном экране кликом добавляем сердечки
+      if(final.style.display === 'block') spawnHearts(10);
+    });
+  </script>
+</body>
+</html>
